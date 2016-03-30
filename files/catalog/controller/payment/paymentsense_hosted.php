@@ -260,12 +260,10 @@ class Controllerpaymentpaymentsensehosted extends Controller {
 		    $order_country = '';
 		}
 		
-		$amount = str_replace(array(',','.'), '',$this->currency->format($order_info['total'], $currency, FALSE, FALSE));
-
 	    $data['fields'] = array();
 		$data['fields']['MerchantID'] = $this->config->get('paymentsense_hosted_mid');
 		$data['fields']['Password'] = $this->config->get('paymentsense_hosted_pass');
-		$data['fields']['Amount'] = $amount;
+		$data['fields']['Amount'] = round($this->currency->format($order_info['total'], $currency, FALSE, FALSE)*100);
 		$data['fields']['CurrencyCode'] = $suppcurr[$currency];
 		$data['fields']['EchoAVSCheckResult'] = 'true';
 		$data['fields']['EchoCV2CheckResult'] = 'true';
@@ -321,7 +319,7 @@ class Controllerpaymentpaymentsensehosted extends Controller {
 		} 
 		else 
 		{
-			return $this->load->view('default/template/payment/paymentsense_hosted.tpl', $data);
+			return $this->load->view('payment/paymentsense_hosted.tpl', $data);
 		}
 	}
 
